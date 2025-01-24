@@ -29,7 +29,9 @@ jobs:
           java-version: 21
 
       - name: Install allurectl
-        uses: allure-framework/setup-allurectl@v1
+        uses: wget https://github.com/allure-framework/allurectl/releases/download/2.15.1/allurectl_linux_amd64 -O ./allurectl
+              chmod +x ./allurectl
+
 
       - name: Build with Maven
         run: allurectl watch -- mvn clean test
