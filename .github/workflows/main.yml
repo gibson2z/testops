@@ -1,37 +1,22 @@
 name: Run tests
 
-on:
-  push:
-  workflow_dispatch:
-    inputs:
-      ALLURE_JOB_RUN_ID:
-        description: ALLURE_JOB_RUN_ID service parameter. Leave blank.
-      ALLURE_USERNAME:
-        description: ALLURE_USERNAME service parameter. Leave blank.
-
-env:
-  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
-  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
-  ALLURE_ENDPOINT: https://testing.qatools.cloud/
-  ALLURE_PROJECT_ID: 1278
-  ALLURE_RESULTS: target/allure-results
+on: [push]
 
 jobs:
-  all-tests:
+  tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: oracle
-          java-version: 21
-
-      - name: Install allurectl
-        uses: wget https://github.com/allure-framework/allurectl/releases/download/2.15.1/allurectl_linux_amd64 -O ./allurectl
-              chmod +x ./allurectl
-
-
-      - name: Build with Maven
-        run: allurectl watch -- mvn clean test
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '21'
+        cache: 'gradle'
+    - uses: allure-framework/setup-allurectl@v1
+      with: 
+        allure-endpoint: https://testing.qatools.cloud/
+        allure-token: ${{ secret.ALLURE_TOKEN }}
+        allure-project-id: 1278
+    - run: allurect watch -- ./gradlew clean test
+      env: 
+        ALLURE_RESULTS: build/allure-results
