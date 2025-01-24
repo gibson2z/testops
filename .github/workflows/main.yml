@@ -7,16 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+
     - uses: actions/setup-java@v3
       with:
-        distribution: 'zulu'
-        java-version: '21'
-        cache: 'gradle'
+        distribution: oracle
+        ava-version: 21
+
     - uses: allure-framework/setup-allurectl@v1
       with: 
         allure-endpoint: https://testing.qatools.cloud/
         allure-token: 78348dba-d0b7-4778-b165-288557c23a3b
         allure-project-id: 1278
-    - run: allurect watch -- ./gradlew clean test
+    - run: allurectl watch -- mvn clean test
       env: 
-        ALLURE_RESULTS: build/allure-results
+        ALLURE_RESULTS: target/allure-results
