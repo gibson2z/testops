@@ -15,7 +15,7 @@ jobs:
     - uses: allure-framework/setup-allurectl@v1
       with: 
         allure-endpoint: https://testing.qatools.cloud/
-        allure-token: ${{ secret.ALLURE_TOKEN }}
+        allure-token: 78348dba-d0b7-4778-b165-288557c23a3b
         allure-project-id: 1278
     - run: allurect watch -- ./gradlew clean test
       env: 
