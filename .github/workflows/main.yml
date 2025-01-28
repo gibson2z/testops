@@ -28,7 +28,7 @@ jobs:
           distribution: oracle
           java-version: 17
 
-      - name: Install allurectl
+      - name: install and configure allurectl
         uses: allure-framework/setup-allurectl@v1
 
       - name: Build with Maven
