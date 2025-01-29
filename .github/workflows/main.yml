@@ -33,4 +33,5 @@ jobs:
 
       - name: Build with Maven
         run: allurectl watch -- mvn clean test
+        cat /home/runner/work/testops/testops/.allure/testplan.json
 
